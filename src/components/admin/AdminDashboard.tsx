@@ -242,7 +242,6 @@ export function AdminDashboard({ selectedDate }: AdminDashboardProps) {
                             size={{ base: 'md', md: 'lg' }}
                             colorPalette="green"
                             rounded="full"
-                            leftIcon={<Icon><LuCheck /></Icon>}
                             fontWeight="bold"
                             px={{ base: 6, md: 10 }}
                             py={{ base: 3, md: 4 }}
@@ -250,6 +249,7 @@ export function AdminDashboard({ selectedDate }: AdminDashboardProps) {
                             transition="all 0.2s"
                             onClick={() => handleStatusChange(selectedAppointment.id, 'completed')}
                           >
+                            <Icon mr="2"><LuCheck /></Icon>
                             Confirmar Turno
                           </Button>
                         )}
