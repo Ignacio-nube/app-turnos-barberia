@@ -229,8 +229,8 @@ export function BookingForm({
                 size={{ base: 'md', md: 'lg' }}
                 rounded="full"
                 gap="2"
-                leftIcon={<Icon as={MdCheckCircle} boxSize={5} />}
               >
+                <Icon as={MdCheckCircle} boxSize={5} />
                 Confirmar Turno
               </Button>
             </Stack>
