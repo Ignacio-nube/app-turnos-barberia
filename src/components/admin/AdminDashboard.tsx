@@ -148,48 +148,50 @@ export function AdminDashboard({ selectedDate }: AdminDashboardProps) {
               <Text color="fg.muted">No hay turnos para este día</Text>
             </Box>
           ) : (
-            <Table.Root size="sm">
-              <Table.Header>
-                <Table.Row>
-                  <Table.ColumnHeader>Hora</Table.ColumnHeader>
-                  <Table.ColumnHeader>Cliente</Table.ColumnHeader>
-                  <Table.ColumnHeader>Teléfono</Table.ColumnHeader>
-                  <Table.ColumnHeader>Estado</Table.ColumnHeader>
-                  <Table.ColumnHeader>Acciones</Table.ColumnHeader>
-                </Table.Row>
-              </Table.Header>
-              <Table.Body>
-                {appointments.map((appointment) => (
-                  <Table.Row key={appointment.id}>
-                    <Table.Cell>
-                      <Badge colorPalette="gray">
-                        {appointment.start_time.substring(0, 5)} - {appointment.end_time.substring(0, 5)}
-                      </Badge>
-                    </Table.Cell>
-                    <Table.Cell fontWeight="medium">
-                      {appointment.client_name}
-                    </Table.Cell>
-                    <Table.Cell color="fg.muted">
-                      {appointment.client_phone}
-                    </Table.Cell>
-                    <Table.Cell>
-                      <Badge colorPalette={STATUS_CONFIG[appointment.status].colorPalette}>
-                        {STATUS_CONFIG[appointment.status].label}
-                      </Badge>
-                    </Table.Cell>
-                    <Table.Cell>
-                      <Button
-                        size="xs"
-                        variant="outline"
-                        onClick={() => openDetails(appointment)}
-                      >
-                        Ver
-                      </Button>
-                    </Table.Cell>
+            <Table.ScrollArea maxW="100vw" borderWidth="1px" rounded="md">
+              <Table.Root size="sm" variant="outline">
+                <Table.Header>
+                  <Table.Row>
+                    <Table.ColumnHeader minW="100px">Hora</Table.ColumnHeader>
+                    <Table.ColumnHeader minW="150px">Cliente</Table.ColumnHeader>
+                    <Table.ColumnHeader minW="120px">Teléfono</Table.ColumnHeader>
+                    <Table.ColumnHeader minW="120px">Estado</Table.ColumnHeader>
+                    <Table.ColumnHeader minW="120px">Acciones</Table.ColumnHeader>
                   </Table.Row>
-                ))}
-              </Table.Body>
-            </Table.Root>
+                </Table.Header>
+                <Table.Body>
+                  {appointments.map((appointment) => (
+                    <Table.Row key={appointment.id}>
+                      <Table.Cell>
+                        <Badge colorPalette="gray">
+                          {appointment.start_time.substring(0, 5)} - {appointment.end_time.substring(0, 5)}
+                        </Badge>
+                      </Table.Cell>
+                      <Table.Cell fontWeight="medium">
+                        {appointment.client_name}
+                      </Table.Cell>
+                      <Table.Cell color="fg.muted">
+                        {appointment.client_phone}
+                      </Table.Cell>
+                      <Table.Cell>
+                        <Badge colorPalette={STATUS_CONFIG[appointment.status].colorPalette}>
+                          {STATUS_CONFIG[appointment.status].label}
+                        </Badge>
+                      </Table.Cell>
+                      <Table.Cell>
+                        <Button
+                          size="xs"
+                          variant="outline"
+                          onClick={() => openDetails(appointment)}
+                        >
+                          Ver
+                        </Button>
+                      </Table.Cell>
+                    </Table.Row>
+                  ))}
+                </Table.Body>
+              </Table.Root>
+            </Table.ScrollArea>
           )}
         </Card.Body>
       </Card.Root>
@@ -237,12 +239,18 @@ export function AdminDashboard({ selectedDate }: AdminDashboardProps) {
                       <Stack direction="row" gap="2" flexWrap="wrap">
                         {selectedAppointment.status !== 'completed' && (
                           <Button
-                            size="sm"
+                            size={{ base: 'md', md: 'lg' }}
                             colorPalette="green"
+                            rounded="full"
+                            leftIcon={<Icon><LuCheck /></Icon>}
+                            fontWeight="bold"
+                            px={{ base: 6, md: 10 }}
+                            py={{ base: 3, md: 4 }}
+                            shadow="md"
+                            transition="all 0.2s"
                             onClick={() => handleStatusChange(selectedAppointment.id, 'completed')}
                           >
-                            <Icon mr="1"><LuCheck /></Icon>
-                            Completar
+                            Confirmar Turno
                           </Button>
                         )}
                         {selectedAppointment.status !== 'no_show' && (
