@@ -8,23 +8,53 @@ import {
   Button,
   Dialog,
   Portal,
+  Flex,
+  Spinner,
+  Center,
 } from '@chakra-ui/react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { ColorModeButton } from '@/components/ui/color-mode';
 import { LuScissors, LuHeart, LuMapPin } from 'react-icons/lu';
 import { useShopSettings } from '@/hooks';
 
 interface LayoutProps {
   children: React.ReactNode;
+  loading?: boolean;
 }
 
 const MotionBox = motion(Box);
 
-export function Layout({ children }: LayoutProps) {
-  const { settings } = useShopSettings();
+export function Layout({ children, loading }: LayoutProps) {
+  const { settings, isLoading: settingsLoading } = useShopSettings();
+  const isAppLoading = loading || settingsLoading;
 
   return (
     <Box minH="100vh" bg="bg">
+      <AnimatePresence>
+        {isAppLoading && (
+          <MotionBox
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            position="fixed"
+            top="0"
+            left="0"
+            right="0"
+            bottom="0"
+            bg="bg/80"
+            backdropFilter="blur(10px)"
+            zIndex="9999"
+          >
+            <Center h="100vh">
+              <Stack align="center" gap="4">
+                <Spinner size="xl" color="blue.500" borderWidth="4px" />
+                <Text fontWeight="medium" color="fg.muted">Cargando...</Text>
+              </Stack>
+            </Center>
+          </MotionBox>
+        )}
+      </AnimatePresence>
+
       {/* Header */}
       <Box
         as="header"
@@ -41,30 +71,30 @@ export function Layout({ children }: LayoutProps) {
         boxShadow="0 4px 30px rgba(0, 0, 0, 0.1)"
       >
         <Container maxW="6xl">
-          <Stack
-            direction="row"
+          <Flex
             justify="space-between"
             align="center"
             py="3"
+            gap="4"
           >
-            <Link href="/" textDecoration="none" _hover={{ textDecoration: 'none' }}>
+            <Link href="/" textDecoration="none" _hover={{ textDecoration: 'none' }} flexShrink={0}>
               <Stack direction="row" align="center" gap="2">
-                <Icon fontSize="2xl" color="blue.500">
+                <Icon fontSize={{ base: "xl", md: "2xl" }} color="blue.500">
                   <LuScissors />
                 </Icon>
-                <Text fontWeight="bold" fontSize="xl">
+                <Text fontWeight="bold" fontSize={{ base: "md", md: "xl" }} truncate maxW={{ base: "150px", sm: "full" }}>
                   {settings?.shop_name || 'Turnos'}
                 </Text>
               </Stack>
             </Link>
 
-            <Stack direction="row" align="center" gap="4">
+            <Stack direction="row" align="center" gap={{ base: "2", md: "4" }}>
               {settings?.google_maps_url && (
                 <Dialog.Root size="lg">
                   <Dialog.Trigger asChild>
-                    <Button variant="ghost" size="sm" gap="2">
+                    <Button variant="ghost" size="sm" gap="2" px={{ base: "2", md: "4" }}>
                       <Icon><LuMapPin /></Icon>
-                      Ubicación
+                      <Text display={{ base: "none", sm: "block" }}>Ubicación</Text>
                     </Button>
                   </Dialog.Trigger>
                   <Portal>
@@ -126,7 +156,7 @@ export function Layout({ children }: LayoutProps) {
                   </Portal>
                 </Dialog.Root>
               )}
-              <Link href="/" textStyle="sm" color="fg.muted" _hover={{ color: 'fg' }}>
+              <Link href="/" textStyle="sm" color="fg.muted" _hover={{ color: 'fg' }} display={{ base: "none", md: "block" }}>
                 Reservar
               </Link>
               <Link href="/admin" textStyle="sm" color="fg.muted" _hover={{ color: 'fg' }}>
@@ -134,7 +164,7 @@ export function Layout({ children }: LayoutProps) {
               </Link>
               <ColorModeButton />
             </Stack>
-          </Stack>
+          </Flex>
         </Container>
       </Box>
 

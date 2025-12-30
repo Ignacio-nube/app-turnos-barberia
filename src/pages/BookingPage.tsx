@@ -91,7 +91,7 @@ export function BookingPage() {
 
   if (settingsLoading) {
     return (
-      <Layout>
+      <Layout loading={true}>
         <Container maxW="6xl" py="16">
           <Box textAlign="center">
             <Text>Cargando...</Text>
@@ -102,9 +102,9 @@ export function BookingPage() {
   }
 
   return (
-    <Layout>
+    <Layout loading={appointmentsLoading}>
       {/* Hero Section */}
-      <Box position="relative" h="90vh" w="100%" overflow="hidden" bg="black">
+      <Box position="relative" minH={{ base: "70vh", md: "90vh" }} w="100%" overflow="hidden" bg="black">
         <video
           autoPlay
           loop
@@ -133,11 +133,12 @@ export function BookingPage() {
         />
         <Container maxW="6xl" h="100%" position="relative" zIndex="2">
           <Stack
-            h="100%"
+            minH={{ base: "70vh", md: "90vh" }}
             justify="center"
             align="center"
             textAlign="center"
             gap="8"
+            py="10"
           >
             <MotionBox
               initial={{ opacity: 0, y: 20 }}
@@ -145,18 +146,20 @@ export function BookingPage() {
               transition={{ duration: 0.8, ease: "easeOut" }}
               bg="whiteAlpha.200"
               backdropFilter="blur(8px)"
-              p="10"
+              p={{ base: "6", md: "10" }}
               borderRadius="3xl"
               borderWidth="1px"
               borderColor="whiteAlpha.300"
               boxShadow="2xl"
+              w="full"
+              maxW="3xl"
             >
               <Stack gap="6">
                 <MotionHeading
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2, duration: 0.8 }}
-                  size="5xl"
+                  size={{ base: "3xl", md: "5xl" }}
                   color="white"
                   fontWeight="black"
                   lineHeight="tight"
@@ -167,7 +170,7 @@ export function BookingPage() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.4, duration: 0.8 }}
-                  fontSize="2xl"
+                  fontSize={{ base: "lg", md: "2xl" }}
                   color="whiteAlpha.900"
                   maxW="2xl"
                   mx="auto"
@@ -188,7 +191,7 @@ export function BookingPage() {
                     whileTap={{ scale: 0.95 }}
                     size="xl"
                     colorPalette="blue"
-                    px="12"
+                    px={{ base: "8", md: "12" }}
                     onClick={scrollToBooking}
                     gap="2"
                     borderRadius="full"
@@ -206,7 +209,7 @@ export function BookingPage() {
                       color="white"
                       borderColor="whiteAlpha.600"
                       _hover={{ bg: 'whiteAlpha.300' }}
-                      px="12"
+                      px={{ base: "8", md: "12" }}
                       gap="2"
                       borderRadius="full"
                     >
@@ -223,8 +226,8 @@ export function BookingPage() {
         </Container>
       </Box>
 
-      <Container maxW="6xl" py="20" ref={bookingRef}>
-        <Stack gap="12">
+      <Container maxW="6xl" py={{ base: "10", md: "20" }} ref={bookingRef}>
+        <Stack gap={{ base: "8", md: "12" }}>
           {/* Header */}
           <MotionBox
             initial={{ opacity: 0, y: 20 }}
@@ -232,14 +235,14 @@ export function BookingPage() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
             textAlign="center"
-            p="8"
+            p={{ base: "6", md: "8" }}
             borderRadius="3xl"
             bgGradient="to-b"
             gradientFrom="whiteAlpha.50"
             gradientTo="transparent"
           >
-            <Heading size="3xl" mb="4">Reserva tu Cita</Heading>
-            <Text color="fg.muted" fontSize="lg">
+            <Heading size={{ base: "2xl", md: "3xl" }} mb="4">Reserva tu Cita</Heading>
+            <Text color="fg.muted" fontSize={{ base: "md", md: "lg" }}>
               Selecciona una fecha y horario para tu visita
             </Text>
           </MotionBox>

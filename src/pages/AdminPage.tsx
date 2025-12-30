@@ -31,7 +31,7 @@ export function AdminPage() {
   // Si está cargando, mostrar loading
   if (isLoading) {
     return (
-      <Layout>
+      <Layout loading={true}>
         <Container maxW="6xl" py="16">
           <Box textAlign="center">
             <Text>Verificando autenticación...</Text>
@@ -45,7 +45,7 @@ export function AdminPage() {
   if (!user) {
     return (
       <Layout>
-        <Container maxW="md" py="20">
+        <Container maxW="md" py={{ base: "10", md: "20" }}>
           <MotionBox
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -61,12 +61,12 @@ export function AdminPage() {
   // Usuario autenticado - mostrar panel admin
   return (
     <Layout>
-      <Container maxW="6xl" py="8">
+      <Container maxW="6xl" py={{ base: "4", md: "8" }}>
         <Stack gap="6">
           {/* Header */}
-          <Stack direction={{ base: 'column', md: 'row' }} justify="space-between" align={{ base: 'stretch', md: 'center' }}>
+          <Stack direction={{ base: 'column', md: 'row' }} justify="space-between" align={{ base: 'stretch', md: 'center' }} gap="4">
             <Box>
-              <Heading size="2xl">
+              <Heading size={{ base: "xl", md: "2xl" }}>
                 <Icon mr="2" color="blue.500"><LuLayoutDashboard /></Icon>
                 Panel de Administración
               </Heading>
@@ -74,8 +74,8 @@ export function AdminPage() {
                 Gestiona los turnos y configuración de tu negocio
               </Text>
             </Box>
-            <Stack direction="row" gap="2">
-              <Text color="fg.muted" textStyle="sm" alignSelf="center">
+            <Stack direction="row" gap="2" justify="space-between" align="center">
+              <Text color="fg.muted" textStyle="sm" truncate maxW="200px">
                 {user.email}
               </Text>
               <Button variant="outline" size="sm" onClick={signOut}>
@@ -86,12 +86,12 @@ export function AdminPage() {
 
           {/* Tabs */}
           <Tabs.Root defaultValue="dashboard" variant="enclosed">
-            <Tabs.List>
-              <Tabs.Trigger value="dashboard">
+            <Tabs.List overflowX="auto" whiteSpace="nowrap" display="flex">
+              <Tabs.Trigger value="dashboard" flex="1">
                 <Icon mr="2"><LuClipboardList /></Icon>
                 Turnos
               </Tabs.Trigger>
-              <Tabs.Trigger value="settings">
+              <Tabs.Trigger value="settings" flex="1">
                 <Icon mr="2"><LuSettings /></Icon>
                 Configuración
               </Tabs.Trigger>
