@@ -10,7 +10,9 @@ import {
   Text,
   Textarea,
   Badge,
+  Icon,
 } from '@chakra-ui/react';
+import { MdCheckCircle } from 'react-icons/md';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 import { toaster } from '@/components/ui/toaster';
@@ -224,8 +226,12 @@ export function BookingForm({
                 flex="1"
                 loading={isSubmitting}
                 loadingText="Reservando..."
+                size={{ base: 'md', md: 'lg' }}
+                rounded="full"
+                gap="2"
+                leftIcon={<Icon as={MdCheckCircle} boxSize={5} />}
               >
-                ✅ Confirmar Turno
+                Confirmar Turno
               </Button>
             </Stack>
           </Stack>
