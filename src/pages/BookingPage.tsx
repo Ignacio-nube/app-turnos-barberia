@@ -29,7 +29,11 @@ const MotionStack = motion(Stack);
 const MotionButton = motion(Button);
 
 export function BookingPage() {
-  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
+  const [selectedDate, setSelectedDate] = useState<Date | null>(() => {
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    return tomorrow;
+  });
   const [selectedSlot, setSelectedSlot] = useState<TimeSlot | null>(null);
   const [bookingComplete, setBookingComplete] = useState(false);
   const bookingRef = useRef<HTMLDivElement>(null);
